@@ -1,4 +1,15 @@
+//
+////  ProfileVC.swift
+//  A2
+//
+//  Created by Vin Bui on 6/4/23.
+//
+
 import UIKit
+
+protocol UpdateTextDelegate: AnyObject {
+    func updateText(newHome: String, newMajor: String)
+}
 
 class ProfileVC: UIViewController {
 
@@ -7,14 +18,14 @@ class ProfileVC: UIViewController {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-        iv.layer.cornerRadius = 50  // You can adjust based on your requirements
+        iv.layer.cornerRadius = 50
         iv.image = UIImage(named: "prof")
         return iv
     }()
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Richie Ippoliti"  // Placeholder
+        label.text = "Richie Ippoliti"
         label.font = UIFont.systemFont(ofSize: 32)
         return label
     }()
@@ -31,13 +42,13 @@ class ProfileVC: UIViewController {
     private let hometownIcon: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
-        iv.image = UIImage(named: "Home")  // Placeholder image name
+        iv.image = UIImage(named: "Home")
         return iv
     }()
     
     private let hometownLabel: UILabel = {
         let label = UILabel()
-        label.text = "Bellmore, NY"  // Placeholder
+        label.text = "Bellmore, NY"
         label.font = UIFont.systemFont(ofSize: 16)
         return label
     }()
@@ -45,13 +56,13 @@ class ProfileVC: UIViewController {
     private let schoolIcon: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
-        iv.image = UIImage(named: "School")  // Placeholder image name
+        iv.image = UIImage(named: "School")
         return iv
     }()
     
     private let schoolLabel: UILabel = {
         let label = UILabel()
-        label.text = "Cornell University"  // Placeholder
+        label.text = "Cornell University"
         label.font = UIFont.systemFont(ofSize: 16)
         return label
     }()
@@ -59,13 +70,13 @@ class ProfileVC: UIViewController {
     private let majorIcon: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
-        iv.image = UIImage(named: "major")  // Placeholder image name
+        iv.image = UIImage(named: "major")
         return iv
     }()
     
     private let majorLabel: UILabel = {
         let label = UILabel()
-        label.text = "Computer Science"  // Placeholder
+        label.text = "Computer Science"
         label.font = UIFont.systemFont(ofSize: 16)
         return label
     }()
@@ -74,24 +85,24 @@ class ProfileVC: UIViewController {
         let iv = UIImageView()
         iv.image = UIImage(named: "Home")
         iv.contentMode = .scaleAspectFit
-        iv.image = UIImage(named: "App")  // Placeholder image name
+        iv.image = UIImage(named: "App")
         return iv
     }()
     
     private let appLabel: UILabel = {
         let label = UILabel()
-        label.text = "Volume"  // Placeholder
+        label.text = "Volume"
         label.font = UIFont.systemFont(ofSize: 16)
         return label
     }()
-    // ... [Repeat for school, major, app store]
     
     private let editProfileButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Edit Profile", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = UIColor.a2.ruby  // Adjust based on your design
-        button.layer.cornerRadius = 5
+        button.backgroundColor = UIColor.a2.ruby
+        button.layer.cornerRadius = 16
+        button.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
         return button
     }()
     
@@ -100,6 +111,14 @@ class ProfileVC: UIViewController {
         super.viewDidLoad()
         setupViews()
     }
+    
+    @objc private func buttonClicked() {
+        let editVC = EditProfileVC(home: hometownLabel.text ?? "Bellmore, NY", major: majorLabel.text ?? "Computer Science", delegate: self)
+        navigationController?.pushViewController(editVC, animated: .random())
+        
+        
+    }
+    
     
     // MARK: - Set Up Views
     private func setupViews() {
@@ -116,7 +135,6 @@ class ProfileVC: UIViewController {
         view.addSubview(appIcon)
         view.addSubview(appLabel)
         view.addSubview(editProfileButton)
-        // ... [Add other subviews similarly]
         
         setupLayoutConstraints()
     }
@@ -180,11 +198,23 @@ class ProfileVC: UIViewController {
             appLabel.centerYAnchor.constraint(equalTo: appIcon.centerYAnchor),
             appLabel.leadingAnchor.constraint(equalTo: appIcon.trailingAnchor, constant: 30),
 
-            editProfileButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -100),
+            editProfileButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
             editProfileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            editProfileButton.widthAnchor.constraint(equalToConstant: 200),
-            editProfileButton.heightAnchor.constraint(equalToConstant: 50)
+            editProfileButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            editProfileButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            editProfileButton.heightAnchor.constraint(equalToConstant: 56)
         ])
     }
 
+}
+
+extension ProfileVC: UpdateTextDelegate {
+    
+    func updateText(newHome: String, newMajor: String) {
+        hometownLabel.text = newHome
+        majorLabel.text = newMajor
+        hometownLabel.text = newHome
+
+    }
+    
 }

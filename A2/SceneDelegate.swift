@@ -22,6 +22,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // 3. Create a view hierarchy programmatically
         let rootVC = ProfileVC()
         let navController = UINavigationController(rootViewController: rootVC)
+        rootVC.title = "My Profile"
+        //let editVC = EditProfileVC()
+        //editVC.title = "Edit Profile"
         
         // 4. Set the navigation controller as the window's root view controller
         window.rootViewController = navController
