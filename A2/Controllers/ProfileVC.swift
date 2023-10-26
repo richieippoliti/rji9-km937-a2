@@ -37,7 +37,7 @@ class ProfileVC: UIViewController {
     
     private let hometownLabel: UILabel = {
         let label = UILabel()
-        label.text = "Dallas, TX"  // Placeholder
+        label.text = "Bellmore, NY"  // Placeholder
         label.font = UIFont.systemFont(ofSize: 16)
         return label
     }()
@@ -65,7 +65,7 @@ class ProfileVC: UIViewController {
     
     private let majorLabel: UILabel = {
         let label = UILabel()
-        label.text = "Information Science"  // Placeholder
+        label.text = "Computer Science"  // Placeholder
         label.font = UIFont.systemFont(ofSize: 16)
         return label
     }()
